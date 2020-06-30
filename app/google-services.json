@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1047901975740",
+    "firebase_url": "https://gemme-a6567.firebaseio.com",
+    "project_id": "gemme-a6567",
+    "storage_bucket": "gemme-a6567.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1047901975740:android:9ba77d7aeba29ce2608cb9",
+        "android_client_info": {
+          "package_name": "com.inteligenciadigital.gemme"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1047901975740-nodnst9av99a3t2gg4h12dto9ft2mdoj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.inteligenciadigital.gemme",
+            "certificate_hash": "c15a610b7c07afc36641af73bae6d7fc253aa516"
+          }
+        },
+        {
+          "client_id": "1047901975740-0batm7rn7qmreseah8fp9tvfg1g14n2r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDkcF8plq8ArPdrq_OpDU8TttkHx_0ma8s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1047901975740-0batm7rn7qmreseah8fp9tvfg1g14n2r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
