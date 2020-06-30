@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Gemme</string>
+    <string name="titulo_slide_1">Organize suas contas \n de onde estiver</string>
+    <string name="descricao_slide_1">Simples, fácil de user e grátis</string>
 </resources>
