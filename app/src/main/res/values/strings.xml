@@ -8,4 +8,15 @@
     <string name="descricao_slide_3">Receba alertas quando quiser</string>
     <string name="titulo_slide_4">Tudo organizado, no celular ou computador</string>
     <string name="descricao_slide_4">Use no seu smartphone e acessendo o Gemme pelo site</string>
+    <string name="titulo_cadsatro">Crie sua conta grátis</string>
+    <string name="descricao_cadastro">Junte-se a mais de meio milhão\n de pessoas e comence já</string>
+    <string name="botao_cadastro">Cadastre-se</string>
+    <string name="link_log_cadastro">Já tenho conta</string>
+    <string name="tela_cadastro">Crie sua conta grátis</string>
+    <string name="btn_Login">Log In</string>
+    <string name="btn_cadastro">Cadastrar</string>
+    <string name="termos_cadastro">Termos de uso</string>
+    <string name="titulo_login">Acesse sua conta</string>
+    <string name="email">Email</string>
+    <string name="senha">Senha</string>
 </resources>
