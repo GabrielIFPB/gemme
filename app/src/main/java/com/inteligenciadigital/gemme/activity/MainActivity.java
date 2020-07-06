@@ -1,4 +1,4 @@
-package com.inteligenciadigital.gemme;
+package com.inteligenciadigital.gemme.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,6 +6,7 @@ import android.view.View;
 
 import com.heinrichreimersoftware.materialintro.app.IntroActivity;
 import com.heinrichreimersoftware.materialintro.slide.FragmentSlide;
+import com.inteligenciadigital.gemme.R;
 import com.inteligenciadigital.gemme.activity.CadastroActivity;
 import com.inteligenciadigital.gemme.activity.LoginActivity;
 
