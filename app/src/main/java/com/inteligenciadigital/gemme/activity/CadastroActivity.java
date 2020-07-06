@@ -36,7 +36,7 @@ public class CadastroActivity extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_cadastro);
 
-		this.btn = findViewById(R.id.btn_cadastro_id);
+		this.btn = findViewById(R.id.btn_id);
 		this.email = findViewById(R.id.email_id);
 		this.senha = findViewById(R.id.senha_id);
 		this.nome = findViewById(R.id.nome_id);
@@ -94,7 +94,7 @@ public class CadastroActivity extends AppCompatActivity {
 						} catch (FirebaseAuthWeakPasswordException e) {
 							excecao = "Digite uma senha mais forte!";
 						} catch (FirebaseAuthInvalidCredentialsException e) {
-							excecao = "Digite um e-mail válido!";
+							excecao = "Por favor, digite um e-mail válido!";
 						} catch (FirebaseAuthUserCollisionException e) {
 							excecao = "Está conta já foi cadastrada!";
 						} catch (Exception e) {
