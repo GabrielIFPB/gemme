@@ -63,7 +63,6 @@ public class MainActivity extends IntroActivity {
 	protected void onStart() {
 		super.onStart();
 		this.isLogado();
-//		this.firebaseAuth.signOut();
 	}
 
 	public void btnLogin(View view) {
@@ -76,6 +75,7 @@ public class MainActivity extends IntroActivity {
 
 	public void isLogado() {
 		this.firebaseAuth = ConfiguracaoFirebase.getFirebaseAuth();
+//		this.firebaseAuth.signOut();
 		if (this.firebaseAuth.getCurrentUser() != null) {
 			this.activityPrincipal();
 		}
