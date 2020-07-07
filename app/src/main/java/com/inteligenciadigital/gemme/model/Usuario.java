@@ -6,6 +6,8 @@ import com.inteligenciadigital.gemme.firebase.ConfiguracaoFirebase;
 
 public class Usuario {
 	private String nome, email, senha, id;
+	private Double receitaTotal = 0.0, despesaTotal = 0.0;
+
 
 	public Usuario() {
 	}
@@ -55,5 +57,21 @@ public class Usuario {
 
 	public void setSenha(String senha) {
 		this.senha = senha;
+	}
+
+	public Double getReceitaTotal() {
+		return receitaTotal;
+	}
+
+	public void setReceitaTotal(Double receitaTotal) {
+		this.receitaTotal = receitaTotal;
+	}
+
+	public Double getDespesaTotal() {
+		return despesaTotal;
+	}
+
+	public void setDespesaTotal(Double despesaTotal) {
+		this.despesaTotal = despesaTotal;
 	}
 }
