@@ -3,5 +3,17 @@
 	<color name="colorPrimary">#0439D9</color>
 	<color name="colorPrimaryDark">#07038C</color>
 	<color name="colorAccent">#F20732</color>
+
+	<color name="colorMenuFloating">#2983F8</color>
+
+	<color name="colorPressed">#710518</color>
 	<color name="descricaoSlide">#272525</color>
+
+	<color name="colorDespesa">#8C0303</color>
+	<color name="colorDespesaDark">#590202</color>
+	<color name="colorDespesaAccent">#BF0404</color>
+
+	<color name="colorReceita">#03A62C</color>
+	<color name="colorReceitaDark">#038C33</color>
+	<color name="colorReceitaAccent">#05F228</color>
 </resources>

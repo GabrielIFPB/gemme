@@ -4,6 +4,7 @@
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
+	xmlns:fab="http://schemas.android.com/apk/res-auto"
 	tools:context=".activity.PrincipalActivity">
 
 	<com.google.android.material.appbar.AppBarLayout
@@ -22,12 +23,39 @@
 
 	<include layout="@layout/content_principal" />
 
-	<com.google.android.material.floatingactionbutton.FloatingActionButton
-		android:id="@+id/fab"
+
+	<com.github.clans.fab.FloatingActionMenu
+		android:id="@+id/btn_floating_id"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:layout_gravity="bottom|end"
-		android:layout_margin="@dimen/fab_margin"
-		app:srcCompat="@android:drawable/ic_dialog_email" />
+		android:layout_gravity="end|bottom"
+		android:layout_margin="10dp"
+		fab:menu_icon="@drawable/ic_branco_add_24"
+		app:menu_colorNormal="@color/colorMenuFloating"
+		app:menu_colorPressed="@color/colorPressed" >
+
+		<com.github.clans.fab.FloatingActionButton
+			android:id="@+id/despesa_id"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:src="@drawable/ic_branco_add_24"
+			android:onClick="addDespesa"
+			fab:fab_size="mini"
+			fab:fab_colorNormal="@color/colorDespesa"
+			fab:fab_colorPressed="@color/colorDespesaDark"
+			fab:fab_label="Despesa" />
+
+		<com.github.clans.fab.FloatingActionButton
+			android:id="@+id/receita_id"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:src="@drawable/ic_branco_add_24"
+			android:onClick="addReceita"
+			fab:fab_size="mini"
+			fab:fab_colorNormal="@color/colorReceita"
+			fab:fab_colorPressed="@color/colorReceitaDark"
+			fab:fab_label="Receita" />
+
+	</com.github.clans.fab.FloatingActionMenu>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

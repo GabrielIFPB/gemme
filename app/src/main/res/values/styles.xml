@@ -7,6 +7,26 @@
 		<item name="colorAccent">@color/colorAccent</item>
 	</style>
 
+	<!-- tema aplicado na activity despesa! -->
+	<style name="DespesaTheme" parent="Theme.AppCompat.Light.NoActionBar">
+		<!-- Customize your theme here. -->
+		<item name="windowActionBar">false</item>
+		<item name="windowNoTitle">true</item>
+		<item name="colorPrimary">@color/colorDespesa</item>
+		<item name="colorPrimaryDark">@color/colorDespesaDark</item>
+		<item name="colorAccent">@color/colorDespesaAccent</item>
+	</style>
+
+	<!-- tema aplicado na activity receita! -->
+	<style name="ReceitaTheme" parent="Theme.AppCompat.Light.NoActionBar">
+		<!-- Customize your theme here. -->
+		<item name="windowActionBar">false</item>
+		<item name="windowNoTitle">true</item>
+		<item name="colorPrimary">@color/colorReceita</item>
+		<item name="colorPrimaryDark">@color/colorReceitaDark</item>
+		<item name="colorAccent">@color/colorReceitaAccent</item>
+	</style>
+
 	<style name="AppTheme.NoActionBar">
 		<item name="windowActionBar">false</item>
 		<item name="windowNoTitle">true</item>
