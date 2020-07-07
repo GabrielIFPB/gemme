@@ -65,7 +65,7 @@
         android:ems="10"
         android:hint="@string/senha"
         android:inputType="textPassword"
-        app:layout_constraintBottom_toTopOf="@+id/btn_cadastro_id"
+        app:layout_constraintBottom_toTopOf="@+id/btn_id"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -74,7 +74,7 @@
         android:drawableStart="@drawable/lock_24" />
 
     <Button
-        android:id="@+id/btn_cadastro_id"
+        android:id="@+id/btn_id"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -84,6 +84,7 @@
         android:layout_marginRight="32dp"
         android:layout_marginBottom="8dp"
         android:background="@color/colorPrimary"
+        android:onClick="login"
         android:text="@string/btn_Login"
         android:textColor="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"

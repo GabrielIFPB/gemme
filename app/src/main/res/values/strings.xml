@@ -1,23 +1,32 @@
 <resources>
-    <string name="app_name">Gemme</string>
-    <string name="titulo_slide_1">Organize suas contas \n de onde estiver</string>
-    <string name="descricao_slide_1">Simples, fácil de user e grátis</string>
-    <string name="titulo_slide_2">Saiba para onde está indo seu dinheiro</string>
-    <string name="descricao_slide_2">Categorizando seus lamçamentos e vendo o destino de cada centavo</string>
-    <string name="titulo_slide_3">Nunca mais esqueça de pagar uma conta</string>
-    <string name="descricao_slide_3">Receba alertas quando quiser</string>
-    <string name="titulo_slide_4">Tudo organizado, no celular ou computador</string>
-    <string name="descricao_slide_4">Use no seu smartphone e acessendo o Gemme pelo site</string>
-    <string name="titulo_cadsatro">Crie sua conta grátis</string>
-    <string name="descricao_cadastro">Junte-se a mais de meio milhão\n de pessoas e comence já</string>
-    <string name="botao_cadastro">Cadastre-se</string>
-    <string name="link_log_cadastro">Já tenho conta</string>
-    <string name="tela_cadastro">Crie sua conta grátis</string>
-    <string name="btn_Login">Log In</string>
-    <string name="btn_cadastro">Cadastrar</string>
-    <string name="termos_cadastro">Termos de uso</string>
-    <string name="titulo_login">Acesse sua conta</string>
-    <string name="email">Email</string>
-    <string name="senha">Senha</string>
-    <string name="nome">Nome</string>
+	<string name="app_name">Gemme</string>
+	<string name="titulo_slide_1">Organize suas contas \n de onde estiver</string>
+	<string name="descricao_slide_1">Simples, fácil de user e grátis</string>
+	<string name="titulo_slide_2">Saiba para onde está indo seu dinheiro</string>
+	<string name="descricao_slide_2">Categorizando seus lamçamentos e vendo o destino de cada centavo</string>
+	<string name="titulo_slide_3">Nunca mais esqueça de pagar uma conta</string>
+	<string name="descricao_slide_3">Receba alertas quando quiser</string>
+	<string name="titulo_slide_4">Tudo organizado, no celular ou computador</string>
+	<string name="descricao_slide_4">Use no seu smartphone e acessendo o Gemme pelo site</string>
+	<string name="titulo_cadsatro">Crie sua conta grátis</string>
+	<string name="descricao_cadastro">Junte-se a mais de meio milhão\n de pessoas e comence já</string>
+	<string name="botao_cadastro">Cadastre-se</string>
+	<string name="link_log_cadastro">Já tenho conta</string>
+	<string name="tela_cadastro">Crie sua conta grátis</string>
+	<string name="btn_Login">Log In</string>
+	<string name="btn_cadastro">Cadastrar</string>
+	<string name="termos_cadastro">Termos de uso</string>
+	<string name="titulo_login">Acesse sua conta</string>
+	<string name="email">Email</string>
+	<string name="senha">Senha</string>
+	<string name="nome">Nome</string>
+	<string name="title_activity_principal">PrincipalActivity</string>
+	<!-- Strings used for fragments for navigation -->
+	<string name="first_fragment_label">First Fragment</string>
+	<string name="second_fragment_label">Second Fragment</string>
+	<string name="next">Next</string>
+	<string name="previous">Previous</string>
+
+	<string name="hello_first_fragment">Hello first fragment</string>
+	<string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 </resources>

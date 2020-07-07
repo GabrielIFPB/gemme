@@ -79,7 +79,7 @@
         android:ems="10"
         android:hint="@string/senha"
         android:inputType="textPassword"
-        app:layout_constraintBottom_toTopOf="@+id/btn_cadastro_id"
+        app:layout_constraintBottom_toTopOf="@+id/btn_id"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -88,7 +88,7 @@
         android:autofillHints="" />
 
     <Button
-        android:id="@+id/btn_cadastro_id"
+        android:id="@+id/btn_id"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -116,5 +116,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_cadastro_id" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_id" />
 </androidx.constraintlayout.widget.ConstraintLayout>
