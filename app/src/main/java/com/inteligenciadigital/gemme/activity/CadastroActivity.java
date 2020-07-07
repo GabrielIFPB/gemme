@@ -20,13 +20,14 @@ import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.inteligenciadigital.gemme.R;
 import com.inteligenciadigital.gemme.firebase.ConfiguracaoFirebase;
+import com.inteligenciadigital.gemme.helper.Base64Custom;
 import com.inteligenciadigital.gemme.model.Usuario;
 
 import java.util.Objects;
 
 public class CadastroActivity extends AppCompatActivity {
 
-	private Button btn;
+//	private Button btn;
 	private EditText nome, email, senha;
 	private FirebaseAuth firebaseAuth;
 	private Usuario usuario;
@@ -36,7 +37,7 @@ public class CadastroActivity extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_cadastro);
 
-		this.btn = findViewById(R.id.btn_id);
+//		this.btn = findViewById(R.id.btn_id);
 		this.email = findViewById(R.id.email_id);
 		this.senha = findViewById(R.id.senha_id);
 		this.nome = findViewById(R.id.nome_id);
@@ -83,6 +84,9 @@ public class CadastroActivity extends AppCompatActivity {
 				@Override
 				public void onComplete(@NonNull Task<AuthResult> task) {
 					if (task.isSuccessful()) {
+						String idUser = Base64Custom.codificarBase64(usuario.getEmail());
+						usuario.setId(idUser);
+						usuario.salvar();
 						finish();
 					} else {
 						String excecao = "";
