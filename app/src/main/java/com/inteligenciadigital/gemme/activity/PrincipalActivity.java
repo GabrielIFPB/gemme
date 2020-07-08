@@ -37,6 +37,8 @@ public class PrincipalActivity extends AppCompatActivity {
 	private TextView textNome, textSaldo;
 	private FirebaseAuth firebaseAuth = ConfiguracaoFirebase.getFirebaseAuth();
 	private DatabaseReference firebaseData = ConfiguracaoFirebase.getFirebaseData();
+	private DatabaseReference usuarioDb;
+	private ValueEventListener valueEventListener;
 
 	private Double receitaTotal = 0.0, despesaTotal = 0.0;
 
@@ -54,16 +56,16 @@ public class PrincipalActivity extends AppCompatActivity {
 
 		this.calendarView = findViewById(R.id.calendarView);
 		this.configCalendario();
-		this.getSaldoGeral();
+
 
 	}
 
 	private void getSaldoGeral() {
 		String idUser = Base64Custom.codificarBase64(this.firebaseAuth.getCurrentUser().getEmail());
-		DatabaseReference usuarioDb = this.firebaseData.child("usuarios")
+		this.usuarioDb = this.firebaseData.child("usuarios")
 				.child(idUser);
 
-		usuarioDb.addValueEventListener(new ValueEventListener() {
+		this.valueEventListener = this.usuarioDb.addValueEventListener(new ValueEventListener() {
 			@Override
 			public void onDataChange(@NonNull DataSnapshot snapshot) {
 				Usuario user = snapshot.getValue(Usuario.class);
@@ -117,5 +119,17 @@ public class PrincipalActivity extends AppCompatActivity {
 				Toast.makeText(PrincipalActivity.this, date.getDay() + "/" + date.getMonth() + "/" + date.getYear(), Toast.LENGTH_LONG).show();
 			}
 		});
+	}
+
+	@Override
+	protected void onStart() {
+		this.getSaldoGeral();
+		super.onStart();
+	}
+
+	@Override
+	protected void onStop() {
+		this.usuarioDb.removeEventListener(this.valueEventListener);
+		super.onStop();
 	}
 }
