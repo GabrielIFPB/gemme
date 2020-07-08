@@ -10,7 +10,8 @@
 	<com.google.android.material.appbar.AppBarLayout
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:theme="@style/AppTheme.AppBarOverlay">
+		android:theme="@style/AppTheme.AppBarOverlay"
+		app:elevation="0dp" >
 
 		<androidx.appcompat.widget.Toolbar
 			android:id="@+id/toolbar"
@@ -38,7 +39,7 @@
 			android:id="@+id/despesa_id"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:src="@drawable/ic_branco_add_24"
+			app:srcCompat="@drawable/ic_branco_add_24"
 			android:onClick="addDespesa"
 			fab:fab_size="mini"
 			fab:fab_colorNormal="@color/colorDespesa"
@@ -49,7 +50,7 @@
 			android:id="@+id/receita_id"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:src="@drawable/ic_branco_add_24"
+			app:srcCompat="@drawable/ic_branco_add_24"
 			android:onClick="addReceita"
 			fab:fab_size="mini"
 			fab:fab_colorNormal="@color/colorReceita"

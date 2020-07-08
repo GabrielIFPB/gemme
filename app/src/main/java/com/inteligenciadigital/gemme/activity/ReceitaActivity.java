@@ -43,6 +43,8 @@ public class ReceitaActivity extends AppCompatActivity {
 		this.valor = findViewById(R.id.valor_id);
 
 		this.data.setText(DateUtil.getDateNow());
+
+		this.getReceitaTotal();
 	}
 
 	@RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -60,7 +62,7 @@ public class ReceitaActivity extends AppCompatActivity {
 
 			this.receitaAtualizada = this.receitaTotal + valor;
 
-			this.getReceitaTotal();
+			this.atualizarReceita();
 			this.movimentacao.salvar();
 
 			this.limpar();
