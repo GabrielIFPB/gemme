@@ -17,17 +17,28 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 import com.inteligenciadigital.gemme.R;
 import com.inteligenciadigital.gemme.firebase.ConfiguracaoFirebase;
+import com.inteligenciadigital.gemme.helper.Base64Custom;
+import com.inteligenciadigital.gemme.model.Usuario;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import com.prolificinteractive.materialcalendarview.OnMonthChangedListener;
 
+import java.text.DecimalFormat;
+
 public class PrincipalActivity extends AppCompatActivity {
 
 	private MaterialCalendarView calendarView;
-	private TextView nome, saldo;
-	private FirebaseAuth firebaseAuth;
+	private TextView textNome, textSaldo;
+	private FirebaseAuth firebaseAuth = ConfiguracaoFirebase.getFirebaseAuth();
+	private DatabaseReference firebaseData = ConfiguracaoFirebase.getFirebaseData();
+
+	private Double receitaTotal = 0.0, despesaTotal = 0.0;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -38,20 +49,38 @@ public class PrincipalActivity extends AppCompatActivity {
 		toolbar.setTitle("");
 		setSupportActionBar(toolbar);
 
-		this.nome = findViewById(R.id.nome_id);
-		this.saldo = findViewById(R.id.saldo_id);
+		this.textNome = findViewById(R.id.nome_id);
+		this.textSaldo = findViewById(R.id.saldo_id);
 
 		this.calendarView = findViewById(R.id.calendarView);
 		this.configCalendario();
+		this.getSaldoGeral();
 
-//		FloatingActionButton fab = findViewById(R.id.fab);
-//		fab.setOnClickListener(new View.OnClickListener() {
-//			@Override
-//			public void onClick(View view) {
-//				Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//						.setAction("Action", null).show();
-//			}
-//		});
+	}
+
+	private void getSaldoGeral() {
+		String idUser = Base64Custom.codificarBase64(this.firebaseAuth.getCurrentUser().getEmail());
+		DatabaseReference usuarioDb = this.firebaseData.child("usuarios")
+				.child(idUser);
+
+		usuarioDb.addValueEventListener(new ValueEventListener() {
+			@Override
+			public void onDataChange(@NonNull DataSnapshot snapshot) {
+				Usuario user = snapshot.getValue(Usuario.class);
+				despesaTotal = user.getDespesaTotal();
+				receitaTotal = user.getReceitaTotal();
+
+				DecimalFormat decimalFormat = new DecimalFormat("#,##0.00");
+
+				textNome.setText("Olá, " + user.getNome());
+				textSaldo.setText("R$ " + decimalFormat.format(receitaTotal - despesaTotal));
+			}
+
+			@Override
+			public void onCancelled(@NonNull DatabaseError error) {
+
+			}
+		});
 	}
 
 	@Override
@@ -63,7 +92,6 @@ public class PrincipalActivity extends AppCompatActivity {
 	@Override
 	public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 		if (item.getItemId() == R.id.sair) {
-			this.firebaseAuth = ConfiguracaoFirebase.getFirebaseAuth();
 			this.firebaseAuth.signOut();
 			startActivity(new Intent(this, MainActivity.class));
 			finish();
