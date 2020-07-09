@@ -2,19 +2,16 @@ package com.inteligenciadigital.gemme.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -22,24 +19,34 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.inteligenciadigital.gemme.R;
+import com.inteligenciadigital.gemme.adapter.AdapterMovimentacao;
 import com.inteligenciadigital.gemme.firebase.ConfiguracaoFirebase;
 import com.inteligenciadigital.gemme.helper.Base64Custom;
+import com.inteligenciadigital.gemme.model.Movimentacao;
 import com.inteligenciadigital.gemme.model.Usuario;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import com.prolificinteractive.materialcalendarview.OnMonthChangedListener;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PrincipalActivity extends AppCompatActivity {
 
 	private MaterialCalendarView calendarView;
 	private TextView textNome, textSaldo;
+
+	private RecyclerView recyclerView;
+	private AdapterMovimentacao adapterMovimentacao;
+	private List<Movimentacao> movimentacoes = new ArrayList<>();
+
 	private FirebaseAuth firebaseAuth = ConfiguracaoFirebase.getFirebaseAuth();
 	private DatabaseReference firebaseData = ConfiguracaoFirebase.getFirebaseData();
-	private DatabaseReference usuarioDb;
-	private ValueEventListener valueEventListener;
+	private DatabaseReference usuarioDb, movimentacaoDb;
+	private ValueEventListener valueEventListenerUser, valueEventListenerMovi;
 
+	private String data;
 	private Double receitaTotal = 0.0, despesaTotal = 0.0;
 
 	@Override
@@ -54,10 +61,41 @@ public class PrincipalActivity extends AppCompatActivity {
 		this.textNome = findViewById(R.id.nome_id);
 		this.textSaldo = findViewById(R.id.saldo_id);
 
+		this.recyclerView = findViewById(R.id.list_movimento_id);
+
 		this.calendarView = findViewById(R.id.calendarView);
 		this.configCalendario();
 
+		this.adapterMovimentacao = new AdapterMovimentacao(this.movimentacoes, this);
 
+		RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+		this.recyclerView.setLayoutManager(layoutManager);
+		this.recyclerView.setHasFixedSize(true);
+		this.recyclerView.setAdapter(this.adapterMovimentacao);
+	}
+
+	private void getMovimentacoes() {
+		String idUser = Base64Custom.codificarBase64(this.firebaseAuth.getCurrentUser().getEmail());
+		this.movimentacaoDb = this.firebaseData.child("movimentacao")
+				.child(idUser)
+				.child(this.data);
+
+		this.valueEventListenerMovi = this.movimentacaoDb.addValueEventListener(new ValueEventListener() {
+			@Override
+			public void onDataChange(@NonNull DataSnapshot snapshot) {
+				movimentacoes.clear();
+				for (DataSnapshot dados: snapshot.getChildren()) {
+					Movimentacao movimentacao = dados.getValue(Movimentacao.class);
+					movimentacoes.add(movimentacao);
+				}
+				adapterMovimentacao.notifyDataSetChanged();
+			}
+
+			@Override
+			public void onCancelled(@NonNull DatabaseError error) {
+
+			}
+		});
 	}
 
 	private void getSaldoGeral() {
@@ -65,7 +103,7 @@ public class PrincipalActivity extends AppCompatActivity {
 		this.usuarioDb = this.firebaseData.child("usuarios")
 				.child(idUser);
 
-		this.valueEventListener = this.usuarioDb.addValueEventListener(new ValueEventListener() {
+		this.valueEventListenerUser = this.usuarioDb.addValueEventListener(new ValueEventListener() {
 			@Override
 			public void onDataChange(@NonNull DataSnapshot snapshot) {
 				Usuario user = snapshot.getValue(Usuario.class);
@@ -113,10 +151,16 @@ public class PrincipalActivity extends AppCompatActivity {
 		CharSequence[] meses = {"Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"};
 		this.calendarView.setTitleMonths(meses);
 
+		CalendarDay dataAtual = calendarView.getCurrentDate();
+
+		this.data = String.format("%02d", dataAtual.getMonth()) + dataAtual.getYear();
+
 		this.calendarView.setOnMonthChangedListener(new OnMonthChangedListener() {
 			@Override
 			public void onMonthChanged(MaterialCalendarView widget, CalendarDay date) {
-				Toast.makeText(PrincipalActivity.this, date.getDay() + "/" + date.getMonth() + "/" + date.getYear(), Toast.LENGTH_LONG).show();
+				data = String.format("%02d", date.getMonth()) + date.getYear();
+				movimentacaoDb.removeEventListener(valueEventListenerMovi);
+				getMovimentacoes();
 			}
 		});
 	}
@@ -124,12 +168,14 @@ public class PrincipalActivity extends AppCompatActivity {
 	@Override
 	protected void onStart() {
 		this.getSaldoGeral();
+		this.getMovimentacoes();
 		super.onStart();
 	}
 
 	@Override
 	protected void onStop() {
-		this.usuarioDb.removeEventListener(this.valueEventListener);
+		this.usuarioDb.removeEventListener(this.valueEventListenerUser);
+		this.movimentacaoDb.removeEventListener(this.valueEventListenerMovi);
 		super.onStop();
 	}
 }
