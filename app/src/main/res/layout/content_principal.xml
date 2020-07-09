@@ -52,7 +52,10 @@
 
 	<androidx.recyclerview.widget.RecyclerView
 		android:id="@+id/list_movimento_id"
-		android:layout_width="409dp"
-		android:layout_height="519dp" />
+		android:layout_width="match_parent"
+		android:layout_height="519dp"
+		android:fadeScrollbars="true"
+		android:isScrollContainer="true"
+		android:scrollbars="horizontal" />
 
 </LinearLayout>

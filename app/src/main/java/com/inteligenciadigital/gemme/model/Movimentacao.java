@@ -6,6 +6,7 @@ import androidx.annotation.RequiresApi;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.Exclude;
 import com.inteligenciadigital.gemme.firebase.ConfiguracaoFirebase;
 import com.inteligenciadigital.gemme.helper.Base64Custom;
 import com.inteligenciadigital.gemme.helper.DateUtil;
@@ -13,19 +14,11 @@ import com.inteligenciadigital.gemme.helper.DateUtil;
 import java.util.Objects;
 
 public class Movimentacao {
-	private String data, categoria, descricao;
+	private String id, data, categoria, descricao;
 	private int tipo;
 	private Double valor;
 
 	public Movimentacao() {
-	}
-
-	public Movimentacao(String data, String categoria, String descricao, int tipo, Double valor) {
-		this.data = data;
-		this.categoria = categoria;
-		this.descricao = descricao;
-		this.tipo = tipo;
-		this.valor = valor;
 	}
 
 	@RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -40,6 +33,15 @@ public class Movimentacao {
 				.child(DateUtil.getMesAno(this.getData()))
 				.push()
 				.setValue(this);
+	}
+
+	@Exclude
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	public String getData() {
