@@ -1,5 +1,6 @@
 package com.inteligenciadigital.gemme.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -8,8 +9,10 @@ import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -46,6 +49,8 @@ public class PrincipalActivity extends AppCompatActivity {
 	private DatabaseReference usuarioDb, movimentacaoDb;
 	private ValueEventListener valueEventListenerUser, valueEventListenerMovi;
 
+	private Movimentacao movimentacao;
+
 	private String data;
 	private Double receitaTotal = 0.0, despesaTotal = 0.0;
 
@@ -65,6 +70,7 @@ public class PrincipalActivity extends AppCompatActivity {
 
 		this.calendarView = findViewById(R.id.calendarView);
 		this.configCalendario();
+		this.swipe();
 
 		this.adapterMovimentacao = new AdapterMovimentacao(this.movimentacoes, this);
 
@@ -72,6 +78,76 @@ public class PrincipalActivity extends AppCompatActivity {
 		this.recyclerView.setLayoutManager(layoutManager);
 		this.recyclerView.setHasFixedSize(true);
 		this.recyclerView.setAdapter(this.adapterMovimentacao);
+	}
+
+	private void swipe() {
+		ItemTouchHelper.Callback itemTouch = new ItemTouchHelper.Callback() {
+			@Override
+			public int getMovementFlags(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
+				int dragFlags = ItemTouchHelper.ACTION_STATE_IDLE;
+				int swipeFlags = ItemTouchHelper.START | ItemTouchHelper.END;
+				return makeMovementFlags(dragFlags, swipeFlags);
+			}
+
+			@Override
+			public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+				return false;
+			}
+
+			@Override
+			public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+				excluirMovimentacao(viewHolder);
+			}
+		};
+
+		new ItemTouchHelper(itemTouch).attachToRecyclerView(this.recyclerView);
+	}
+
+	private void excluirMovimentacao(final RecyclerView.ViewHolder viewHolder) {
+		AlertDialog.Builder alert  = new AlertDialog.Builder(this);
+		alert.setTitle("Excluir Movimentação da Conta");
+		alert.setMessage("Você tem certeza que deseja realmente excluir essa movimentação de sua conta?");
+		alert.setCancelable(false);
+
+		alert.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				int position = viewHolder.getAdapterPosition();
+				movimentacao = movimentacoes.get(position);
+				String idUser = Base64Custom.codificarBase64(firebaseAuth.getCurrentUser().getEmail());
+				movimentacaoDb = firebaseData.child("movimentacao")
+						.child(idUser)
+						.child(data);
+
+				movimentacaoDb.child(movimentacao.getId()).removeValue();
+				adapterMovimentacao.notifyItemRemoved(position);
+				atualizarSaldo();
+			}
+		});
+
+		alert.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				adapterMovimentacao.notifyDataSetChanged();
+			}
+		});
+
+		AlertDialog alertDialog = alert.create();
+		alertDialog.show();
+	}
+
+	private void atualizarSaldo() {
+		String idUser = Base64Custom.codificarBase64(this.firebaseAuth.getCurrentUser().getEmail());
+		this.usuarioDb = this.firebaseData.child("usuarios")
+				.child(idUser);
+
+		if (this.movimentacao.getTipo() == 1) {
+			this.receitaTotal -= this.movimentacao.getValor();
+			this.usuarioDb.child("receitaTotal").setValue(this.receitaTotal);
+		} else {
+			this.despesaTotal -= this.movimentacao.getValor();
+			this.usuarioDb.child("despesaTotal").setValue(this.despesaTotal);
+		}
 	}
 
 	private void getMovimentacoes() {
@@ -86,6 +162,7 @@ public class PrincipalActivity extends AppCompatActivity {
 				movimentacoes.clear();
 				for (DataSnapshot dados: snapshot.getChildren()) {
 					Movimentacao movimentacao = dados.getValue(Movimentacao.class);
+					movimentacao.setId(dados.getKey());
 					movimentacoes.add(movimentacao);
 				}
 				adapterMovimentacao.notifyDataSetChanged();
@@ -112,7 +189,7 @@ public class PrincipalActivity extends AppCompatActivity {
 
 				DecimalFormat decimalFormat = new DecimalFormat("#,##0.00");
 
-				textNome.setText("Olá, " + user.getNome());
+				textNome.setText("Olá, " + user.getNome() + "!");
 				textSaldo.setText("R$ " + decimalFormat.format(receitaTotal - despesaTotal));
 			}
 
